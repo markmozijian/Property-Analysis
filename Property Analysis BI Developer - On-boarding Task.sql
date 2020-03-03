@@ -38,19 +38,6 @@ FROM [dbo].[Job] j
 WHERE j.JobStatusId =1
 
 
-SELECT 
-	  CASE
-    WHEN [PaymentFrequencyId] = 1 THEN DATEDIFF(WEEK, tp.StartDate, tp.EndDate)*tp.PaymentAmount
-    WHEN [PaymentFrequencyId] = 2 THEN DATEDIFF(WEEK, tp.StartDate, tp.EndDate)*tp.PaymentAmount/2
-	WHEN [PaymentFrequencyId] = 3 THEN DATEDIFF(MONTH, tp.StartDate, tp.EndDate)*tp.PaymentAmount
-    ELSE NULL
-END AS Yield
-FROM [Keys].[dbo].[OwnerProperty] op
-INNER JOIN [dbo].[Property] p ON op.PropertyId = p.Id
-INNER JOIN [dbo].[PropertyHomeValue]  phv ON op.PropertyId = phv.PropertyId
-INNER JOIN [Keys].[dbo].[TenantProperty] tp ON op.PropertyId = tp.PropertyId
-WHERE op.OwnerId = 1426 AND phv.HomeValueTypeId=1
-
 --e.	Display all property names, current tenants first and last names and rental payments per week/ fortnight/month for the properties in question a).
 
 SELECT p.Name AS PropertyName
